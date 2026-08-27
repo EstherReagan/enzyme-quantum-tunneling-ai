@@ -19,6 +19,10 @@ jobs:
         python -m pip install --upgrade pip
         pip install biopython numpy scipy requests pandas torch transformers pytest
         
+    - name: Configure local environment directories
+      run: |
+        mkdir -p data
+        
     - name: Run verification test suite
       run: |
         pytest test_pipeline.py
