@@ -1,10 +1,14 @@
 # 🧬 Quantum Enzyme Tunneling Engine & AI Mutation Platform
 
 ![Build Status](https://github.com)
-[![Framework: Streamlit](https://shields.io)](https://huggingface.co)
-[![Pipeline: Python](https://shields.io)](https://github.com)
-[![Model: ESM--2](https://shields.io)](https://huggingface.co)
 
+[![Framework: Streamlit](https://shields.io)](https://huggingface.co)
+
+[![Pipeline: Python](https://shields.io)](https://github.com)
+
+[![Model: ESM-2](https://shields.io)](https://huggingface.co)
+
+---
 
 An open-source, production-grade computational biology pipeline designed to simulate **quantum proton tunneling** across enzyme active sites and leverage **Generative AI Protein Language Models (ESM-2)** to discover kinetic acceleration mutations.
 
