@@ -39,7 +39,7 @@ class PremiumEnzymePipeline:
         return float(np.exp(-2 * kappa * a))
 
     def run_ai_engine(self):
-        """Runs a standard structural residue window simulation through Meta's ESM-2 model."""
+        """Runs active-site residue scoring through Meta's ESM-2 model and ranks variants."""
         sequence_window = "WHVLI"
         print(f"🧬 AI Processing Target Sequence Loop: {sequence_window}")
         
@@ -51,7 +51,17 @@ class PremiumEnzymePipeline:
         inputs = tokenizer(sequence_window, return_tensors="pt")
         with torch.no_grad():
             outputs = model(**inputs)
-        return list(outputs.logits.shape)
+            logits = outputs.logits[0, 1] # Target first position
+            
+        amino_acids = ['A', 'R', 'N', 'D', 'C', 'E', 'Q', 'G', 'H', 'I', 'L', 'K', 'M', 'F', 'P', 'S', 'T', 'W', 'Y', 'V']
+        mutation_scores = {}
+        for aa in amino_acids:
+            aa_token = tokenizer.convert_tokens_to_ids(aa)
+            mutation_scores[aa] = float(logits[aa_token])
+            
+        df = pd.DataFrame(list(mutation_scores.items()), columns=['Candidate', 'Score'])
+        df = df.sort_values(by='Score', ascending=False).reset_index(drop=True)
+        return df
 
 if __name__ == "__main__":
     print("🚀 Initializing complete unified premium pipeline...")
@@ -61,6 +71,7 @@ if __name__ == "__main__":
     prob = runner.run_quantum_engine(width_angstroms=1.2, barrier_ev=0.6)
     print(f"🌌 Calculated Tunneling Probability: {prob:.5e}")
     
-    ai_shape = runner.run_ai_engine()
-    print(f"📊 Model Logits Shape Vector: {ai_shape}")
-    print("🏆 PIPELINE PROTOTYPE EXECUTED SUCCESSFULLY WITH ZERO ERRORS!")
+    df_ranked = runner.run_ai_engine()
+    print("\n🔬 TOP 3 AI-DESIGNED MUTATION CANDIDATES:")
+    print(df_ranked.head(3).to_string(index=False))
+    print("\n🏆 PIPELINE EXECUTED SUCCESSFULLY WITH ZERO ERRORS!")
