@@ -1,7 +1,7 @@
 # 🧬 Quantum Enzyme Tunneling Engine & AI Mutation Platform
 
-[![Live Web App](https://shields.io)](https://github.io)
-[![Python 3.10+](https://shields.io)](https://github.com)
+[![Live Web App](https://shields.io)](https://huggingface.co)
+[![Python Pipeline](https://shields.io)](https://github.com)
 [![Model: ESM-2](https://shields.io)](https://huggingface.co)
 
 
