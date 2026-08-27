@@ -33,6 +33,8 @@ An open-source, production-grade computational biology pipeline designed to simu
                      ↓
         [ Interactive WebGL Viewer ]
 ```
+### 📊 Quantum Decay Plot Analysis
+![Quantum Plot](quantum_plot.png)
 
 ## 📊 Baseline Simulation Benchmarks
 
