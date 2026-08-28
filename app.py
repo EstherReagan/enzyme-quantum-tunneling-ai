@@ -221,3 +221,76 @@ with grid_col2:
         ),
         yaxis=dict(
             title=dict(text="ATTENUATION VECTOR LOG(T)", font=dict(family='Share Tech Mono', size=11, color='#8492a6')),
+  type="log",
+        gridcolor='rgba(0,242,254,0.05)',
+        zeroline=False
+       ),
+        height=300,
+        margin=dict(l=10, r=10, t=10, b=10),
+        template="plotly_dark",
+
+        paper_bgcolor='rgba(0,0,0,0)',
+        plot_bgcolor='rgba(0,0,0,0)'
+    
+   )
+
+  st.plotly_chart(fig, use_container_width=True)
+  st.markdown('', unsafe_allow_html=True)
+
+ ==========================================
+ DEEP QUANTITATIVE EVOLUTION ANALYSIS PANEL
+ ==========================================
+    st.markdown('', unsafe_allow_html=True)
+    st.markdown("🤖 Generative AI Deep Sequence Mapping Console",
+                                  unsafe_allow_html=True)
+
+ 
+  btn_col, dl_col = st.columns(2, gap="medium")
+     with btn_col:
+         trigger_ai = st.button("🧬 Launch In-Silico Direct Evolution Array Inferences", 
+                                        use_container_width=True)
+         if trigger_ai:
+             with st.spinner("🧠 SENSORS ENGAGED // PROCESSING MASKED ESM-2 MATRICES..."):
+                 df_ranked = runner.run_ai_engine(active_seq)
+
+  # Output probability grid frame formatted dynamically
+   st.dataframe(
+    df_ranked.style.background_gradient(cmap="Darkmint", subset=
+                                        ["Score"]).format({"Score": "{:.4f}"}),
+
+     use_container_width=True
+    
+   )
+
+   st.success("🏆 Mutational evaluation sequence finalized successfully with zero active
+                memory leaks!")
+
+   csv_data = df_ranked.to_csv(index=False).encode('utf-8')
+                       with dl_col:
+                      st.download_button(
+
+                    label="📥 Export Target Prediction Spreadsheet (.CSV)",
+                    data=csv_data,
+                    file_name=f"quantum_ai_matrix_{pdb_input}.csv",
+                    mime="text/csv",
+
+       use_container_width=True
+    )
+       else:
+                st.markdown("SYSTEM PROMPT: Initialize the transformation array command above to 
+                compute zero-shot evolutionary mutational probability vectors across all 20 canonical variants.", 
+                    
+                unsafe_allow_html=True)
+
+  st.markdown('', unsafe_allow_html=True)                
+
+
+
+
+
+    
+
+
+
+
+    
