@@ -227,7 +227,8 @@ if trigger_ai:
             df_ranked.style.background_gradient(cmap="Blues", subset=["Score"]).format({"Score": "{:.4f}"}),
             use_container_width=True
         )
-  st.success("🏆 Mutational ranking iteration finalized with zero memory resource leaks!")
+  st.success("🏆 Mutational ranking iteration finalized with zero memory resource
+  leaks!")
 
 # Automated CSV Exporter Utility
 csv_data = df_ranked.to_csv(index=False).encode('utf-8')
