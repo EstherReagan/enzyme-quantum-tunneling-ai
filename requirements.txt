@@ -8,3 +8,5 @@ torch>=2.2.0
 transformers>=4.38.0
 streamlit>=1.30.0
 streamlit-echarts>=0.0.1
+stmol>=0.0.9
+py3Dmol>=2.0.0
