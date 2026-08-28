@@ -64,13 +64,19 @@ class PremiumEnzymePipeline:
         # Ensure we return a clean sub-window fragment
         return extracted_str[:5] if len(extracted_str) >= 5 else "WHVLI"
 
-    def run_quantum_engine(self, width_angstroms: float, barrier_ev: float, substrate_energy_ev=0.1) -> float:
+      def run_quantum_engine(self, width_angstroms: float, barrier_ev: float, substrate_energy_ev=0.1) -> float:
         """Calculates energy-corrected WKB quantum transmission probability through a barrier."""
+        # --- TECHNICAL EDGE-CASE VALIDATION ---
+        if width_angstroms <= 0:
+            raise ValueError("Physical Impossibility: Tunneling transfer vector width distance must be strictly positive.")
+        if barrier_ev < 0 or substrate_energy_ev < 0:
+            raise ValueError("Physical Impossibility: Energy scalar potentials cannot balance as negative vectors.")
+            
         a = width_angstroms * 1e-10
         V0 = barrier_ev * eV
         E = substrate_energy_ev * eV 
         
-        if E >= V0:
+        if E >= V0 or V0 == 0:
             return 1.0 
             
         # Corrected spatial physics attenuation equation incorporating kinetic particle energy
@@ -80,62 +86,3 @@ class PremiumEnzymePipeline:
         # Empirical prefactor calibration from enzyme kinetic literature benchmarks
         prefactor = 0.01 
         return float(min(1.0, prefactor * T))
-
-    def run_ai_engine(self, sequence_window: str) -> pd.DataFrame:
-        """Masks a targeted catalytic sequence point and queries Meta ESM-2 for substitutions."""
-        device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-        model_name = "facebook/esm2_t6_8M_UR50D"
-        
-        # Proper masking sequence loop integration
-        target_pos = 2 
-        masked_sequence = sequence_window[:target_pos] + "<mask>" + sequence_window[target_pos+1:]
-        
-        tokenizer = AutoTokenizer.from_pretrained(model_name)
-        model = EsmForMaskedLM.from_pretrained(model_name).to(device)
-        model.eval()
-        
-        try:
-            inputs = tokenizer(masked_sequence, return_tensors="pt").to(device)
-            with torch.no_grad():
-                outputs = model(**inputs)
-                
-            # Isolate mask indexing parameter coordinates safely
-            mask_token_id = tokenizer.mask_token_id
-            masked_idx = (inputs['input_ids'] == mask_token_id).nonzero(as_tuple=True)[1][0].item()
-            logits = outputs.logits[0, masked_idx, :]
-            
-            probabilities = torch.softmax(logits, dim=0)
-            amino_acids = ['A', 'R', 'N', 'D', 'C', 'E', 'Q', 'G', 'H', 'I', 'L', 'K', 'M', 'F', 'P', 'S', 'T', 'W', 'Y', 'V']
-            
-            mutation_scores = {}
-            for aa in amino_acids:
-                aa_token = tokenizer.convert_tokens_to_ids(aa)
-                if aa_token != tokenizer.unk_token_id:
-                    mutation_scores[aa] = float(probabilities[aa_token])
-                    
-            df = pd.DataFrame(list(mutation_scores.items()), columns=['Candidate', 'Score'])
-            return df.sort_values(by='Score', ascending=False).reset_index(drop=True)
-            
-        finally:
-            # Explicit senior memory leak safety optimization block
-            del model
-            if torch.cuda.is_available():
-                torch.cuda.empty_cache()
-
-if __name__ == "__main__":
-    print("🚀 Initializing complete peer-reviewed unified premium pipeline...")
-    runner = PremiumEnzymePipeline("1yge")
-    runner.download_data()
-    
-    # Active structural coordinate extraction step
-    active_seq = runner.extract_active_site_sequence()
-    print(f"🧬 Parsed active site loop coordinates: {active_seq}")
-    
-    # Validated physical calculation call
-    prob = runner.run_quantum_engine(width_angstroms=1.2, barrier_ev=0.6, substrate_energy_ev=0.15)
-    print(f"🌌 Energy-Corrected Tunneling Probability: {prob:.5e}")
-    
-    df_ranked = runner.run_ai_engine(active_seq)
-    print("\n🔬 ACCURATE TOP AI-DESIGNED RESIDUE VARIANTS:")
-    print(df_ranked.head(3).to_string(index=False))
-    print("\n🏆 PIPELINE REPAIRED & EXECUTED WITH MAXIMUM RIGOR!")
