@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRETAX // QUANTUM ENZYME AI</title>
+    <link href="https://googleapis.com" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background-color: #08090C; color: #E2E8F0; font-family: 'Inter', sans-serif; padding: 30px; }
+        .header { display: flex; justify-content: space-between; align-items: center; padding-bottom: 15px; border-bottom: 1px solid rgba(0, 229, 255, 0.15); margin-bottom: 35px; }
+        .logo { font-weight: 800; letter-spacing: 2px; }
+        .status-pill { color: #00FFCC; font-size: 11px; font-family: monospace; background: rgba(0,255,204,0.06); padding: 4px 14px; border-radius: 20px; border: 1px solid rgba(0,255,204,0.15); }
+        .dashboard-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 30px; }
+        .sci-card { background: linear-gradient(135deg, rgba(18, 20, 28, 0.9) 0%, rgba(10, 11, 16, 0.98) 100%); border: 1px solid rgba(0, 229, 255, 0.12); border-radius: 12px; padding: 24px; margin-bottom: 22px; box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.6); }
+        .panel-tag { font-size: 11px; text-transform: uppercase; letter-spacing: 2.5px; color: #00E5FF; font-weight: 600; margin-bottom: 6px; }
+        .panel-title { font-size: 20px; font-weight: 700; color: #FFFFFF; margin-bottom: 24px; }
+        .metric-block { padding-bottom: 14px; border-bottom: 1px solid rgba(255, 255, 255, 0.03); margin-bottom: 14px; }
+        .metric-val { font-size: 36px; font-weight: 800; color: #00FFCC; font-family: monospace; }
+        .metric-lbl { font-size: 11px; color: #64748B; text-transform: uppercase; letter-spacing: 1px; margin-top: 6px; }
+        input, select { background: #0C0D14; border: 1px solid rgba(0,229,255,0.2); padding: 10px; color: white; border-radius: 6px; width: 100%; margin-bottom: 15px; }
+        .control-group { margin-bottom: 15px; }
+        label { display: block; font-size: 12px; margin-bottom: 5px; color: #94A3B8; }
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        th, td { padding: 10px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 13px; }
+        th { color: #00E5FF; }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div class="logo">✕ CRETAX <span style="color:#64748B; font-weight:300; font-size:13px;">| ENZYME QUANTUM TUNNELING AI</span></div>
+        <div class="status-pill">STACK SYNC: CONNECTED</div>
+    </div>
+
+    <div class="dashboard-grid">
+        <!-- LEFT CONTROL & READOUT MODULES -->
+        <div>
+            <div class="sci-card">
+                <div class="panel-tag">🔬 SYSTEM CONTROLLER</div>
+                <div class="control-group">
+                    <label>Enzyme Target Code</label>
+                    <select id="catalog" onchange="updatePdb(this.value)">
+                        <option value="1AIL">Dihydrofolate Reductase (1AIL)</option>
+                        <option value="1LOX">Lipoxygenase (1LOX)</option>
+                        <option value="1W0E">Cytochrome P450 (1W0E)</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label>Barrier Width (Å)</label>
+                    <input type="range" id="width" min="0.5" max="3.0" step="0.1" value="1.4" oninput="runCalculations()">
+                </div>
+                <div class="control-group">
+                    <label>Potential Energy (eV)</label>
+                    <input type="range" id="height" min="0.1" max="5.0" step="0.1" value="2.5" oninput="runCalculations()">
+                </div>
+            </div>
+
+            <div class="sci-card">
+                <div class="panel-tag">QUANTUM WAVE READOUTS</div>
+                <div class="metric-block">
+                    <div class="metric-val" id="val-viability">--%</div>
+                    <div class="metric-lbl">WKB Tunneling Transition Probability</div>
+                </div>
+                <div class="metric-block">
+                    <div class="metric-val" id="val-stability">--</div>
+                    <div class="metric-lbl">Kinetic Wave Stability Index (KWS)</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- RIGHT VISUAL ENGINE MODULES -->
+        <div>
+            <div class="sci-card" style="border-color: rgba(0, 229, 255, 0.25);">
+                <div class="panel-tag">HOLOGRAPHIC GEOMETRY MODEL CANVAS</div>
+                <div class="panel-title" id="canvas-title">Active Stream // ID: 1AIL</div>
+                <div id="container-3dmol" style="width: 100%; height: 380px; background-color: #0E0F16; border-radius: 8px; border: 1px solid rgba(255,255,255,0.02);"></div>
+            </div>
+
+            <div class="sci-card">
+                <div class="panel-tag">AI ENGINE MUTATION LOGS (ESM-2 ALIGNMENT)</div>
+                <table>
+                    <thead>
+                        <tr><th>Position</th><th>Native</th><th>Mutation</th><th>Score Delta</th></tr>
+                    </thead>
+                    <tbody id="mutation-table">
+                        <!-- Dynamic API rows go here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://jsdelivr.net"></script>
+    <script src="https://jsdelivr.net"></script>
+    <script>
+        // REPLACE WITH YOUR LIVE RENDER URL AFTER STEP 2 IS DONE
+        const BACKEND_URL = "https://enzyme-quantum-backend.onrender.com"; 
+
+        let viewer = null;
+
+        function load3DModel(pdbId) {
+            let element = $('#container-3dmol');
+            element.empty();
+            viewer = $3Dmol.createViewer(element, { backgroundColor: '#0E0F16' });
+            
+            $.get(`https://rcsb.org{pdbId}.pdb`, function(data) {
+                viewer.addModel(data, "pdb");
+                viewer.setStyle({}, { cartoon: { color: 'spectrum' } });
+                viewer.zoomTo();
+                viewer.render();
+            });
+        }
+
+        function runCalculations() {
+            let pdbId = $('#catalog').val();
+            let width = $('#width').val();
+            let height = $('#height').val();
+
+            $.get(`${BACKEND_URL}/api/calculate?pdb_id=${pdbId}&width=${width}&height=${height}`, function(res) {
+                $('#val-viability').text(res.viability + "%");
+                $('#val-stability').text(res.stability);
+                
+                let tableBody = $('#mutation-table');
+                tableBody.empty();
+                res.mutations.forEach(m => {
+                    tableBody.append(`<tr><td>${m.Position}</td><td>${m.Native}</td><td>${m.Mutation}</td><td style="color:#00FFCC">${m.Score}</td></tr>`);
+                });
+            });
+        }
+
+        function updatePdb(val) {
+            $('#canvas-title').text(`Active Stream // ID: ${val}`);
+            load3DModel(val);
+            runCalculations();
+        }
+
+        $(document).ready(function() {
+            load3DModel("1AIL");
+            runCalculations();
+        });
+    </script>
+</body>
+</html>
