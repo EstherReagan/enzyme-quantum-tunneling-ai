@@ -2,12 +2,7 @@ streamlit>=1.28.0
 numpy
 pandas
 biopython
-torch
-transformers
 plotly
 scipy
 requests
-pytest
-pytest-cov
-pytest-mock
 streamlit-echarts>=0.0.1
