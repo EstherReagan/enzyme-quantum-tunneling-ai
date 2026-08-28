@@ -176,11 +176,12 @@ with col_right:
             "splitLine": {"show": True, "lineStyle": {"color": "rgba(255,255,255,0.05)"}},
             "axisLine": {"lineStyle": {"color": "#4A5568"}}
         },
-        "series": [{
+            "series": [{
             "data": [0.35, 0.58, 0.72, 0.69, 0.88, 0.94],
             "type": "bar",
-            "itemStyle": {"color": "#00E5FF", "borderRadius":}
+            "itemStyle": {"color": "#00E5FF"}
         }],
+
         "grid": {"top": "10%", "bottom": "15%", "left": "10%", "right": "5%"}
     }
     st_echarts(options=chart_options, height="160px")
