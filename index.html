@@ -7,39 +7,78 @@
     <link href="https://googleapis.com" rel="stylesheet">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { background-color: #08090C; color: #E2E8F0; font-family: 'Inter', sans-serif; padding: 30px; }
+        body { 
+            background-color: #050608; 
+            color: #E2E8F0; 
+            font-family: 'Inter', sans-serif; 
+            padding: 30px;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        /* Interactive Background Visual Canvas Nodes */
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            opacity: 0.15;
+            pointer-events: none;
+        }
+
         .header { display: flex; justify-content: space-between; align-items: center; padding-bottom: 15px; border-bottom: 1px solid rgba(0, 229, 255, 0.15); margin-bottom: 35px; }
-        .logo { font-weight: 800; letter-spacing: 2px; }
-        .status-pill { color: #00FFCC; font-size: 11px; font-family: monospace; background: rgba(0,255,204,0.06); padding: 4px 14px; border-radius: 20px; border: 1px solid rgba(0,255,204,0.15); }
+        .logo { font-weight: 800; letter-spacing: 2px; color: #FFFFFF; text-shadow: 0 0 10px rgba(0, 229, 255, 0.3); }
+        .status-pill { color: #00FFCC; font-size: 11px; font-family: monospace; background: rgba(0,255,204,0.06); padding: 4px 14px; border-radius: 20px; border: 1px solid rgba(0,255,204,0.3); box-shadow: 0 0 12px rgba(0,255,204,0.2); }
         .dashboard-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 30px; }
-        .sci-card { background: linear-gradient(135deg, rgba(18, 20, 28, 0.9) 0%, rgba(10, 11, 16, 0.98) 100%); border: 1px solid rgba(0, 229, 255, 0.12); border-radius: 12px; padding: 24px; margin-bottom: 22px; box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.6); }
+        
+        /* Glassmorphism Premium Blocks */
+        .sci-card { 
+            background: linear-gradient(135deg, rgba(14, 16, 22, 0.85) 0%, rgba(8, 9, 12, 0.95) 100%); 
+            border: 1px solid rgba(0, 229, 255, 0.15); 
+            border-radius: 14px; 
+            padding: 24px; 
+            margin-bottom: 22px; 
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7); 
+            backdrop-filter: blur(10px);
+            transition: border 0.3s ease;
+        }
+        .sci-card:hover { border-color: rgba(0, 229, 255, 0.35); }
+
         .panel-tag { font-size: 11px; text-transform: uppercase; letter-spacing: 2.5px; color: #00E5FF; font-weight: 600; margin-bottom: 6px; }
         .panel-title { font-size: 20px; font-weight: 700; color: #FFFFFF; margin-bottom: 24px; }
         .metric-block { padding-bottom: 14px; border-bottom: 1px solid rgba(255, 255, 255, 0.03); margin-bottom: 14px; }
-        .metric-val { font-size: 36px; font-weight: 800; color: #00FFCC; font-family: monospace; }
+        .metric-val { font-size: 38px; font-weight: 800; color: #00FFCC; font-family: monospace; text-shadow: 0 0 15px rgba(0, 255, 204, 0.3); }
         .metric-lbl { font-size: 11px; color: #64748B; text-transform: uppercase; letter-spacing: 1px; margin-top: 6px; }
-        input, select { background: #0C0D14; border: 1px solid rgba(0,229,255,0.2); padding: 10px; color: white; border-radius: 6px; width: 100%; margin-bottom: 15px; }
-        .control-group { margin-bottom: 15px; }
-        label { display: block; font-size: 12px; margin-bottom: 5px; color: #94A3B8; }
+        
+        input[type="range"] { -webkit-appearance: none; width: 100%; background: #121620; height: 6px; border-radius: 3px; outline: none; }
+        input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; border-radius: 50%; background: #00E5FF; cursor: pointer; box-shadow: 0 0 8px #00E5FF; }
+        
+        select { background: #0C0D14; border: 1px solid rgba(0,229,255,0.2); padding: 12px; color: white; border-radius: 6px; width: 100%; font-size: 14px; }
+        .control-group { margin-bottom: 20px; }
+        label { display: block; font-size: 11px; margin-bottom: 8px; color: #94A3B8; text-transform: uppercase; letter-spacing: 1px; }
         table { width: 100%; border-collapse: collapse; margin-top: 15px; }
-        th, td { padding: 10px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 13px; }
-        th { color: #00E5FF; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.04); font-size: 13px; }
+        th { color: #00E5FF; font-transform: uppercase; letter-spacing: 0.5px; }
     </style>
 </head>
 <body>
 
+    <!-- Particle grid backdrop node -->
+    <canvas id="bg-canvas"></canvas>
+
     <div class="header">
-        <div class="logo">✕ CRETAX <span style="color:#64748B; font-weight:300; font-size:13px;">| ENZYME QUANTUM TUNNELING AI</span></div>
-        <div class="status-pill">STACK SYNC: CONNECTED</div>
+        <div class="logo">✕ CRETAX <span style="color:#64748B; font-weight:300; font-size:13px;">| QUANTUM TUNNELING MATRIX</span></div>
+        <div class="status-pill" id="sync-status">SYNCING CORE API...</div>
     </div>
 
     <div class="dashboard-grid">
-        <!-- LEFT CONTROL & READOUT MODULES -->
         <div>
             <div class="sci-card">
-                <div class="panel-tag">🔬 SYSTEM CONTROLLER</div>
-                <div class="control-group">
-                    <label>Enzyme Target Code</label>
+                <div class="panel-tag">🔬 SYSTEM OPERATOR</div>
+                <div class="control-group" style="margin-top:15px;">
+                    <label>Enzyme Vector Map</label>
                     <select id="catalog" onchange="updatePdb(this.value)">
                         <option value="1AIL">Dihydrofolate Reductase (1AIL)</option>
                         <option value="1LOX">Lipoxygenase (1LOX)</option>
@@ -51,14 +90,14 @@
                     <input type="range" id="width" min="0.5" max="3.0" step="0.1" value="1.4" oninput="runCalculations()">
                 </div>
                 <div class="control-group">
-                    <label>Potential Energy (eV)</label>
+                    <label>Potential Energy Barrier (eV)</label>
                     <input type="range" id="height" min="0.1" max="5.0" step="0.1" value="2.5" oninput="runCalculations()">
                 </div>
             </div>
 
             <div class="sci-card">
                 <div class="panel-tag">QUANTUM WAVE READOUTS</div>
-                <div class="metric-block">
+                <div class="metric-block" style="margin-top:15px;">
                     <div class="metric-val" id="val-viability">--%</div>
                     <div class="metric-lbl">WKB Tunneling Transition Probability</div>
                 </div>
@@ -69,46 +108,84 @@
             </div>
         </div>
 
-        <!-- RIGHT VISUAL ENGINE MODULES -->
         <div>
-            <div class="sci-card" style="border-color: rgba(0, 229, 255, 0.25);">
+            <div class="sci-card" style="border-color: rgba(0, 229, 255, 0.3); box-shadow: 0 0 30px rgba(0,229,255,0.1);">
                 <div class="panel-tag">HOLOGRAPHIC GEOMETRY MODEL CANVAS</div>
-                <div class="panel-title" id="canvas-title">Active Stream // ID: 1AIL</div>
-                <div id="container-3dmol" style="width: 100%; height: 380px; background-color: #0E0F16; border-radius: 8px; border: 1px solid rgba(255,255,255,0.02);"></div>
+                <div class="panel-title" id="canvas-title" style="margin-top:5px;">Active Biological Stream // ID: 1AIL</div>
+                <div id="container-3dmol" style="width: 100%; height: 410px; background-color: #07080D; border-radius: 8px; border: 1px solid rgba(255,255,255,0.02); position: relative;"></div>
             </div>
 
             <div class="sci-card">
                 <div class="panel-tag">AI ENGINE MUTATION LOGS (ESM-2 ALIGNMENT)</div>
                 <table>
                     <thead>
-                        <tr><th>Position</th><th>Native</th><th>Mutation</th><th>Score Delta</th></tr>
+                        <tr><th>Position</th><th>Native Residue</th><th>Mutation Target</th><th>Score Delta</th></tr>
                     </thead>
-                    <tbody id="mutation-table">
-                        <!-- Dynamic API rows go here -->
-                    </tbody>
+                    <tbody id="mutation-table"></tbody>
                 </table>
             </div>
         </div>
     </div>
 
     <script src="https://jsdelivr.net"></script>
-    <script src="https://jsdelivr.net"></script>
+    <script src="https://3dmol.org"></script>
     <script>
-        // REPLACE WITH YOUR LIVE RENDER URL AFTER STEP 2 IS DONE
+        // CHANGE THIS VALUE TO MATCH YOUR EXACT LIVE RENDER CONSOLE STRING URL
         const BACKEND_URL = "https://enzyme-quantum-backend.onrender.com"; 
 
         let viewer = null;
 
+        // Background Particle System Simulation Logic
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        for(let i=0; i<40; i++) {
+            particles.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                radius: Math.random() * 1.5 + 0.5,
+                vx: (Math.random() - 0.5) * 0.3,
+                vy: (Math.random() - 0.5) * 0.3
+            });
+        }
+
+        function drawParticles() {
+            ctx.clearRect(0,0,canvas.width,canvas.height);
+            ctx.fillStyle = '#00E5FF';
+            particles.forEach(p => {
+                p.x += p.vx; p.y += p.vy;
+                if(p.x < 0 || p.x > canvas.width) p.vx *= -1;
+                if(p.y < 0 || p.y > canvas.height) p.vy *= -1;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.radius, 0, Math.PI*2);
+                ctx.fill();
+            });
+            requestAnimationFrame(drawParticles);
+        }
+        drawParticles();
+
+        // 3D Atomic Structure Initialization Engine
         function load3DModel(pdbId) {
             let element = $('#container-3dmol');
             element.empty();
-            viewer = $3Dmol.createViewer(element, { backgroundColor: '#0E0F16' });
+            viewer = $3Dmol.createViewer(element, { backgroundColor: '#07080D' });
             
             $.get(`https://rcsb.org{pdbId}.pdb`, function(data) {
                 viewer.addModel(data, "pdb");
                 viewer.setStyle({}, { cartoon: { color: 'spectrum' } });
                 viewer.zoomTo();
                 viewer.render();
+                
+                // Spin loop configuration matching standard premium layouts
+                viewer.animate({loop: "forward", step: 0.5});
             });
         }
 
@@ -118,24 +195,22 @@
             let height = $('#height').val();
 
             $.get(`${BACKEND_URL}/api/calculate?pdb_id=${pdbId}&width=${width}&height=${height}`, function(res) {
+                $('#sync-status').text("STACK SYNC: CONNECTED").css("color", "#00FFCC");
                 $('#val-viability').text(res.viability + "%");
                 $('#val-stability').text(res.stability);
                 
                 let tableBody = $('#mutation-table');
                 tableBody.empty();
                 res.mutations.forEach(m => {
-                    tableBody.append(`<tr><td>${m.Position}</td><td>${m.Native}</td><td>${m.Mutation}</td><td style="color:#00FFCC">${m.Score}</td></tr>`);
-                });
-            });
-        }
 
-        function updatePdb(val) {
+                                              function updatePdb(val) {
             $('#canvas-title').text(`Active Stream // ID: ${val}`);
             load3DModel(val);
             runCalculations();
         }
 
         $(document).ready(function() {
+            // Boot sequence matching initial system states
             load3DModel("1AIL");
             runCalculations();
         });
