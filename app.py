@@ -1,10 +1,9 @@
 import streamlit as st
 from streamlit_echarts import st_echarts
 import streamlit.components.v1 as components
-import py3Dmol
 
 # ==============================================================================
-# 1. PREMIUM MINIMALIST THEME SETTING (Inspired by Reference Image 3)
+# 1. PREMIUM CINEMATIC UI STYLING & STRUCTURE (Blending Images 1 & 3)
 # ==============================================================================
 st.set_page_config(
     page_title="CRETAX // QUANTUM ENZYME AI",
@@ -13,169 +12,201 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Custom injection for a clean grid alignment
+# Custom injection to force high-end sci-fi cards, spacing, and glows
 st.markdown("""
     <style>
+    /* Dark Matte Canvas Base */
     .stApp {
-        background-color: #0B0C10;
+        background-color: #08090C;
         color: #E2E8F0;
-        font-family: 'Inter', sans-serif;
+        font-family: 'Inter', 'Segoe UI', sans-serif;
     }
+    
     header, footer {visibility: hidden;}
     
-    .premium-panel {
-        background-color: #12131C;
-        border: 1px solid rgba(255, 255, 255, 0.04);
-        border-radius: 12px;
+    /* Styled Sidebar to match premium layout */
+    section[data-testid="stSidebar"] {
+        background-color: #0C0D14 !important;
+        border-right: 1px solid rgba(0, 229, 255, 0.1);
+    }
+    
+    /* Deep Glassmorphic Interactive Lab Containers */
+    .sci-card {
+        background: linear-gradient(135deg, rgba(18, 20, 28, 0.85) 0%, rgba(10, 11, 16, 0.95) 100%);
+        border: 1px solid rgba(0, 229, 255, 0.12);
+        border-radius: 10px;
         padding: 24px;
         margin-bottom: 20px;
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6);
     }
     
     .panel-tag {
         font-size: 11px;
         text-transform: uppercase;
         letter-spacing: 2px;
-        color: #64748B;
-        margin-bottom: 8px;
+        color: #00E5FF;
+        font-weight: 600;
+        margin-bottom: 4px;
     }
     
     .panel-title {
-        font-size: 20px;
-        font-weight: 600;
+        font-size: 22px;
+        font-weight: 700;
         color: #FFFFFF;
         margin-bottom: 20px;
+        letter-spacing: -0.5px;
     }
     
-    .stat-container {
-        padding: 14px 0;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+    /* Premium Data Metrics Layout */
+    .metrics-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
     }
-    .stat-num {
-        font-size: 34px;
-        font-weight: 700;
-        color: #00E5FF;
+    .metric-row {
+        padding: 12px 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    }
+    .metric-val {
+        font-size: 36px;
+        font-weight: 800;
+        color: #00FFCC;
         font-family: monospace;
+        line-height: 1;
     }
-    .stat-lbl {
+    .metric-lbl {
         font-size: 11px;
-        color: #94A3B8;
+        color: #718096;
         text-transform: uppercase;
-        letter-spacing: 0.5px;
+        letter-spacing: 1px;
+        margin-top: 6px;
     }
     </style>
 """, unsafe_allow_html=True)
 
 # Top Premium Brand Navigation Header
 st.markdown("""
-    <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid rgba(255,255,255,0.05); margin-bottom: 30px;">
-        <div style="font-weight: 800; letter-spacing: 2px; color: #FFFFFF;">✕ CRETAX <span style='color:#64748B; font-weight:300; font-size:13px;'> | ENZYME QUANTUM TUNNELING ENGINE</span></div>
-        <div style='color: #00FFCC; font-size: 12px; font-family: monospace; background: rgba(0,255,204,0.08); padding: 4px 12px; border-radius: 20px;'>CORE SYNC ACTIVE</div>
+    <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid rgba(0, 229, 255, 0.15); margin-bottom: 30px;">
+        <div style="font-weight: 800; letter-spacing: 2px; color: #FFFFFF; font-size: 16px;">✕ CRETAX <span style='color:#718096; font-weight:300; font-size:13px;'> | ENZYME QUANTUM TUNNELING ENGINE</span></div>
+        <div style='color: #00FFCC; font-size: 12px; font-family: monospace; background: rgba(0,255,204,0.08); padding: 4px 14px; border-radius: 20px; border: 1px solid rgba(0,255,204,0.2);'>CORE SYNC: ACTIVE</div>
     </div>
 """, unsafe_allow_html=True)
 
 # ==============================================================================
-# 2. DYNAMIC CONTROLS & SIDEBAR ENGINE (Real-Time Computation Inputs)
+# 2. RUNNABLE DATA INTERACTION CONTROLS
 # ==============================================================================
 with st.sidebar:
-    st.markdown("### 🛠️ Molecular Dataset Engine")
-    st.write("Modify properties below to run calculations against raw coordinates.")
+    st.markdown("<h3 style='color:#FFFFFF; margin-bottom:15px;'>🧬 Molecular Engine Config</h3>", unsafe_allow_html=True)
     
-    # Text input pulls structural records globally from rcsb.org
-    pdb_code = st.text_input("Target PDB Code", value="1AIL", max_chars=4, help="Try codes like 1AIL (Enzyme fragment), 1UBQ, or 4INS").upper()
-    style_type = st.selectbox("3D Rendering Protocol", ["cartoon", "sphere", "stick", "line"])
-    color_scheme = st.selectbox("Color Theme Strategy", ["spectrum", "chain", "ss"])
+    # Real-world scientific properties inputs
+    pdb_code = st.text_input("Target PDB Code Identifier", value="1AIL", max_chars=4, help="Examples: 1AIL (Enzyme Domain), 1UBQ (Protein Cluster), 4INS (Insulin)").upper()
+    style_type = st.selectbox("3D Structural View Model", ["cartoon", "sphere", "stick", "line"])
+    color_scheme = st.selectbox("Color Mapping Scheme", ["spectrum", "chain", "ss"])
     
     st.write("---")
-    tunneling_factor = st.slider("Quantum Tunneling Bias Scale", 0.1, 2.0, 0.85)
+    tunneling_factor = st.slider("Quantum Tunneling Bias Coefficient", 0.1, 2.0, 0.85)
 
 # ==============================================================================
-# 3. COMPENSATED METRIC ENGINE (Responsive Math Logic instead of empty shells)
+# 3. DYNAMIC DATA CALCULATOR LAYER
 # ==============================================================================
+# Calculations dynamically compute variables so it functions like a real platform
 calculated_stability = round(0.98 - (tunneling_factor * 0.05), 3)
 calculated_viability = int(78 * tunneling_factor) if (78 * tunneling_factor) <= 100 else 100
 
-col_data, col_viewer = st.columns([1, 1.4], gap="large")
+# ==============================================================================
+# 4. TWO-COLUMN INTERACTIVE PREMIUM GRID
+# ==============================================================================
+col_left, col_right = st.columns([1, 1.4], gap="large")
 
-# --- LEFT PANEL: REAL TIME DATA CONSOLE ---
-with col_data:
-    st.markdown("<div class='premium-panel'>", unsafe_allow_html=True)
-    st.markdown("<div class='panel-tag'>QUANTUM SPECTRAL READOUTS</div>", unsafe_allow_html=True)
-    st.markdown(f"<div class='panel-title'>Active Matrix Sequence: {pdb_code}</div>", unsafe_allow_html=True)
-    
+# --- LEFT PANEL: COMPUTATIONAL ANALYSIS WINDOW ---
+with col_left:
+    # Top Data Readout Block
     st.markdown(f"""
-        <div class="stat-container">
-            <div class="stat-num">{calculated_viability}%</div>
-            <div class="stat-lbl">Tunneling Transition Probability</div>
+    <div class="sci-card">
+        <div class="panel-tag">QUANTUM SPECTRAL READOUTS</div>
+        <div class="panel-title">Active Matrix Sequence: {pdb_code}</div>
+        <div class="metrics-grid">
+            <div class="metric-row">
+                <div class="metric-val">{calculated_viability}%</div>
+                <div class="metric-lbl">Tunneling Transition Probability</div>
+            </div>
+            <div class="metric-row">
+                <div class="metric-val">{calculated_stability}</div>
+                <div class="metric-lbl">Quantum Stability Metric (QSM)</div>
+            </div>
+            <div class="metric-row">
+                <div class="metric-val">{(14 * tunneling_factor):.1f} fs</div>
+                <div class="metric-lbl">Wavefunction Collapse Velocity</div>
+            </div>
         </div>
-        <div class="stat-container">
-            <div class="stat-num">{calculated_stability}</div>
-            <div class="stat-lbl">Quantum Stability Metric (QSM)</div>
-        </div>
-        <div class="stat-container">
-            <div class="stat-num">{(14 * tunneling_factor):.1f} fs</div>
-            <div class="stat-lbl">Wavefunction Collapse Velocity</div>
-        </div>
+    </div>
     """, unsafe_allow_html=True)
-    st.markdown("</div>", unsafe_allow_html=True)
 
-    # Historical E-Charts
-    st.markdown("<div class='premium-panel'>", unsafe_allow_html=True)
-    st.markdown("<div class='panel-tag'>TIMELINE MONITORING</div>", unsafe_allow_html=True)
+    # Bottom Historical Metric Graphing Block
+    st.markdown("<div class='sci-card'>", unsafe_allow_html=True)
+    st.markdown("<div class='panel-tag'>TIMELINE MONITORING LOG</div>", unsafe_allow_html=True)
     
     chart_options = {
         "backgroundColor": "transparent",
         "xAxis": {"type": "category", "data": ["Step A", "Step B", "Step C", "Step D", "Current"], "axisLine": {"show": False}},
-        "yAxis": {"type": "value", "splitLine": {"lineStyle": {"color": "rgba(255,255,255,0.03)"}}},
+        "yAxis": {"type": "value", "splitLine": {"lineStyle": {"color": "rgba(255,255,255,0.03)"}}, "axisLine": {"show": False}},
         "series": [{
             "data": [0.4 * tunneling_factor, 0.6 * tunneling_factor, 0.5 * tunneling_factor, 0.8 * tunneling_factor, calculated_stability],
             "type": "line",
             "smooth": True,
             "itemStyle": {"color": "#00FFCC"},
-            "lineStyle": {"width": 3}
+            "lineStyle": {"width": 3, "shadowBlur": 10, "shadowColor": "#00FFCC"},
+            "areaStyle": {"color": "rgba(0, 255, 204, 0.03)"}
         }],
-        "grid": {"top": "15%", "bottom": "15%", "left": "12%", "right": "5%"}
+        "grid": {"top": "10%", "bottom": "15%", "left": "10%", "right": "5%"}
     }
-    st_echarts(options=chart_options, height="170px")
+    st_echarts(options=chart_options, height="175px")
     st.markdown("</div>", unsafe_allow_html=True)
 
 
-# --- RIGHT PANEL: WORKING INTERACTIVE 3D MOLECULAR CANVAS ---
-with col_viewer:
-    st.markdown("<div class='premium-panel'>", unsafe_allow_html=True)
-    st.markdown("<div class='panel-tag'>HOLOGRAPHIC ENZYME RENDERING ENGINE</div>", unsafe_allow_html=True)
-    st.markdown(f"<div class='panel-title'>Active PDB Stream Link // Target ID: {pdb_code}</div>", unsafe_allow_html=True)
+# --- RIGHT PANEL: SECURE INTERACTIVE 3D ENZYME ENGINE ---
+with col_right:
+    st.markdown(f"""
+    <div class="sci-card" style="border-color: rgba(0, 255, 204, 0.25);">
+        <div class="panel-tag">HOLOGRAPHIC ENZYME RENDERING ENGINE</div>
+        <div class="panel-title">Active Secure Stream // Target: {pdb_code}</div>
+    """, unsafe_allow_html=True)
     
-    # Safe HTML Canvas building sequence using native py3Dmol scripting embedded into components.html
-    try:
-        # Build raw JS structure for py3Dmol viewer object canvas
-        html_content = f"""
-        <script src="https://3dmol.org"></script>
-        <div id="container" style="width: 100%; height: 460px; background-color: #12131C; border-radius: 8px;"></div>
-        <script>
-            let element = document.getElementById('container');
-            let config = {{ backgroundColor: '#12131C' }};
-            let viewer = $3Dmol.createViewer(element, config);
+    # Secure web rendering canvas with cross-browser fallback scripts
+    secure_html_canvas = f"""
+    <div id="canvas-3dmol" style="width: 100%; height: 440px; background-color: #0E0F16; border-radius: 8px; border: 1px solid rgba(255,255,255,0.03);"></div>
+    
+    <!-- Load stable secure dependencies directly via CDN -->
+    <script src="https://jsdelivr.net"></script>
+    <script src="https://jsdelivr.net"></script>
+    
+    <script>
+        $(function() {{
+            let container = $('#canvas-3dmol');
+            let viewer = $3Dmol.createViewer(container, {{ backgroundColor: '#0E0F16' }});
             
-            // Pull real structural geometry array elements straight from public biological server APIs
-            jQuery.ajax('https://rcsb.org{pdb_code}.pdb', {{
-                success: function(data) {{
-                    viewer.addModel(data, "pdb");
-                    viewer.setStyle({{}}, {{{style_type}: {{color: '{color_scheme}'}}}});
-                    viewer.zoomTo();
-                    viewer.render();
-                }},
-                error: function() {{
-                    element.innerHTML = "<p style='color:#EF4444; padding:20px; font-family:sans-serif;'>Invalid PDB code: '{pdb_code}' or connection failure.</p>";
-                }}
+            // Pull files using secure structural URLs over HTTPS to bypass mixed-content blocks
+            let secureUrl = 'https://rcsb.org{pdb_code}.pdb';
+            
+            $.get(secureUrl, function(data) {{
+                viewer.addModel(data, "pdb");
+                viewer.setStyle({{}}, {{{style_type}: {{color: '{color_scheme}'}}}});
+                viewer.zoomTo();
+                viewer.render();
+            }}).fail(function() {{
+                container.html("<div style='color:#FF4B4B; font-family:monospace; padding:40px; text-align:center;'>❌ FAILED TO PARSE COORDINATE VECTOR FOR '{pdb_code}'</div>");
             }});
-        </script>
-        """
-        
-        # Inject our responsive iframe component safely to skip python dependencies
-        components.html(html_content, height=480)
-        st.markdown("<span style='color: #64748B; font-size:11px;'>⚙️ Interaction Active: Left-click and drag your mouse to <b>Rotate</b>. Right-click to <b>Pan</b>. Scroll to <b>Zoom</b> into atomic structures.</span>", unsafe_allow_html=True)
-        
-    except Exception as e:
-        st.error("Engine failed to boot structural render nodes.")
-        
-    st.markdown("</div>", unsafe_allow_html=True)
+        }});
+    </script>
+    """
+    
+    # Display the secure 3D canvas object
+    components.html(secure_html_canvas, height=450)
+    
+    st.markdown("""
+        <div style='color: #718096; font-size:11px; margin-top:12px; display:flex; justify-content:space-between;'>
+            <span>⚙️ <b>Interactive Track:</b> Drag to Rotate // Right-Click to Pan // Scroll to Zoom</span>
+            <span style='color: #00FFCC;'>MODEL: LIVE STRUCTURE DATA</span>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
