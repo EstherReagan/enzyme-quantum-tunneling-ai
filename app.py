@@ -11,7 +11,7 @@ from pipeline import PremiumEnzymePipeline
 st.set_page_config(
     layout="wide", 
     page_title="Quantum Enzyme AI Hub",
-    initial_sidebar_state="collapsed" # Hides sidebar for a spacious, modern app canvas
+    initial_sidebar_state="collapsed"
 )
 
 # Premium Custom CSS Injection for a sleek, enterprise SaaS interface
@@ -75,7 +75,6 @@ st.markdown("""
 st.markdown('<div class="glass-card">', unsafe_allow_html=True)
 st.markdown("<h3 style='margin-top:0; color:#ffffff;'>🎛️ Simulation Parameters Control Console</h3>", unsafe_allow_html=True)
 
-# 3-column top control array setup instead of a plain sidebar layout
 ctrl_col1, ctrl_col2, ctrl_col3 = st.columns(3, gap="medium")
 
 with ctrl_col1:
@@ -180,7 +179,6 @@ with grid_col2:
         line=dict(color='#00f2fe', width=3.5)
     ))
     
-    # Vertical crosshair spatial coordinate indicator vector guide line
     fig.add_shape(
         type="line", 
         x0=tunnel_width, x1=tunnel_width, 
@@ -188,7 +186,6 @@ with grid_col2:
         line=dict(color="#ff4b4b", width=1.5, dash="dash")
     )
     
-    # FIXED PLOTLY OBJECT SYNTAX BUG HERE: gridcolor is correctly nested inside axis templates!
     fig.update_layout(
         xaxis=dict(
             title="Transfer Space Vector Coordinate (Å)", 
@@ -217,7 +214,7 @@ st.markdown('<div class="glass-card">', unsafe_allow_html=True)
 st.markdown("<h2 style='margin-top:0;'>🤖 Deep Learning Evolutionary Mutation Engine Workspace</h2>", unsafe_allow_html=True)
 st.markdown("<p style='color:#718096; font-size:13px; margin-top:-0.5rem; margin-bottom:1.5rem;'>Perform zero-shot mutation screening loops using the structural parameter grids of Meta AI's pre-trained ESM-2 Transformer network layers.</p>", unsafe_allow_html=True)
 
-btn_col, pad_col = st.columns([1, 2])
+btn_col, dl_col = st.columns(2, gap="medium")
 with btn_col:
     trigger_ai = st.button("🚀 Run In-Silico Directed Evolution Analysis", use_container_width=True)
 
@@ -225,13 +222,32 @@ if trigger_ai:
     with st.spinner("🧠 Computation active... Evaluating structural matrix probability states..."):
         df_ranked = runner.run_ai_engine(active_seq)
         
-# Display data arrays inside an organized, premium corporate data layout matrix framest.dataframe(
-# Display data arrays inside an organized, premium corporate data layout matrix framest.dataframe(
+        # Display data arrays inside an organized layout matrix frame
+        st.dataframe(
+            df_ranked.style.background_gradient(cmap="Blues", subset=["Score"]).format({"Score": "{:.4f}"}),
+            use_container_width=True
+        )
+  st.success("🏆 Mutational ranking iteration finalized with zero memory resource leaks!")
+
+# Automated CSV Exporter Utility
+csv_data = df_ranked.to_csv(index=False).encode('utf-8')
+with dl_col:
+st.download_button(
+    label="📥 Export Prediction Matrix (CSV Spreadsheet)",
+    data=csv_data,
+
+    file_name=f"esm2_mutation_matrix_{pdb_input}.csv",
+    mime="text/csv",
 use_container_width=True
-)
-st.success("🏆 Mutational ranking iteration finalized with zero memory resource leaks!")else:
-st.info("💡 Click the tracking command above to run prediction metrics natively across all 20 canonical amino acid variables.")
+    )
+else:
+st.info("💡 Click the tracking command above to run prediction metrics natively across all 
+20 canonical amino acid variables.")
 st.markdown('', unsafe_allow_html=True)
+
+
+    
+
 
 
 
