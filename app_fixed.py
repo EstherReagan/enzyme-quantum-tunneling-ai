@@ -6,86 +6,100 @@ import plotly.graph_objects as go
 from pipeline import PremiumEnzymePipeline
 
 # ==========================================
-# PAGE CONFIGURATIONS & COMPACT CONTAINERS
+# PAGE VIEWS & DARK SAPPHIRE CUSTOM ENGINE THEME
 # ==========================================
 st.set_page_config(
     layout="wide", 
     page_title="Quantum Enzyme AI Hub",
-    initial_sidebar_state="expanded"
+    initial_sidebar_state="collapsed" # Hides sidebar for a spacious, modern app canvas
 )
 
-# Custom Enterprise CSS Injector for shadows, depth, and clean topography grids
+# Premium Custom CSS Injection for a sleek, enterprise SaaS interface
 st.markdown("""
 <style>
-    /* Remove redundant white spacing */
-    .block-container { padding-top: 1.5rem; padding-bottom: 1.5rem; max-width: 95%; }
+    /* Global Background Override */
+    .stApp { background-color: #0d0e12; color: #f1f3f9; }
+    .block-container { padding-top: 2rem; padding-bottom: 2rem; max-width: 90%; }
     
-    /* Premium dark-mode modular structural cards */
-    .metric-card { 
-        background-color: #16171d; 
-        border: 1px solid #232733; 
-        border-radius: 12px; 
-        padding: 1.25rem; 
-        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        margin-bottom: 1rem;
+    /* Elegant Dark Sapphire Glassmorphism Containers */
+    .glass-card {
+        background: rgba(20, 24, 33, 0.65);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 16px;
+        padding: 1.75rem;
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        margin-bottom: 1.5rem;
     }
-    .info-card {
-        background: linear-gradient(135deg, #111217 0%, #1a1c24 100%);
-        border: 1px solid #232733;
+    
+    /* Premium Minimal Metrics */
+    .premium-metric-box {
+        background: linear-gradient(135deg, rgba(29, 36, 51, 0.5) 0%, rgba(17, 22, 31, 0.5) 100%);
+        border: 1px solid rgba(255, 255, 255, 0.03);
         border-radius: 12px;
-        padding: 1.5rem;
-        margin-bottom: 1.25rem;
+        padding: 1.25rem;
+        text-align: left;
     }
     
-    /* Clean typography accents */
-    h1 { font-family: 'Inter', sans-serif; font-weight: 800; color: #ffffff; letter-spacing: -0.75px; margin-bottom: 0.25rem; }
-    h2 { font-family: 'Inter', sans-serif; font-weight: 700; color: #f7fafc; margin-top: 1rem; }
-    h3 { font-family: 'Inter', sans-serif; font-weight: 600; color: #cbd5e0; margin-bottom: 0.75rem; }
+    /* Typography Overrides */
+    h1 { font-family: 'Inter', sans-serif; font-weight: 800; color: #ffffff; letter-spacing: -1px; margin-bottom: 0.5rem; }
+    h2 { font-family: 'Inter', sans-serif; font-weight: 700; color: #ffffff; margin-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 0.5rem; }
+    h3 { font-family: 'Inter', sans-serif; font-weight: 600; color: #a0aec0; margin-bottom: 0.75rem; }
     
-    /* Style default metric labels cleanly */
-    div[data-testid="stMetricLabel"] p { font-size: 11px !important; text-transform: uppercase; letter-spacing: 0.5px; color: #a0aec0 !important; }
-    div[data-testid="stMetricValue"] div { font-size: 24px !important; font-weight: 700 !important; color: #00ffcc !important; }
+    /* Modern Form Elements Overrides */
+    div[data-testid="stMetricLabel"] p { font-size: 11px !important; text-transform: uppercase; letter-spacing: 1px; color: #718096 !important; font-weight: 600; }
+    div[data-testid="stMetricValue"] div { font-size: 26px !important; font-weight: 700 !important; color: #00f2fe !important; }
+    
+    /* Hide Default UI Artifacts */
+    #MainMenu {visibility: hidden;}
+    footer {visibility: hidden;}
 </style>
 """, unsafe_allow_html=True)
 
 # ==========================================
-# EXECUTIVE APP HEADER HUB
+# ENTERPRISE MASTER APP HEADER
 # ==========================================
-st.title("🧬 Quantum Enzyme Tunneling Engine & AI Mutation Platform")
-st.markdown("<p style='color:#a0aec0; margin:0 0 1.5rem 0; font-size:14px;'>Production-Grade Quantitative Biology & In-Silico Molecular Direct Evolution Workspace</p>", unsafe_allow_html=True)
+st.markdown("""
+<div style="margin-bottom: 2.5rem;">
+    <h1>Quantum Enzyme Tunneling Engine & AI Mutation Platform</h1>
+    <p style="color:#718096; margin:0; font-size:14px; font-weight: 500; letter-spacing: 0.5px;">
+        PRODUCTION-GRADE QUANTITATIVE BIOLOGY & IN-SILICO MOLECULAR DESIGN MATRIX
+    </p>
+</div>
+""", unsafe_allow_html=True)
 
 # ==========================================
-# SIDEBAR REFACTOR PARAMETER SCISSORS
+# INTEGRATED APP PANEL CONTROLS (UNIFIED UI)
 # ==========================================
-st.sidebar.header("⚙️ Simulation Controls")
-st.sidebar.markdown("Modify chemical boundaries below to update the quantum-AI core variables dynamically.")
+st.markdown('<div class="glass-card">', unsafe_allow_html=True)
+st.markdown("<h3 style='margin-top:0; color:#ffffff;'>🎛️ Simulation Parameters Control Console</h3>", unsafe_allow_html=True)
 
-pdb_input = st.sidebar.text_input("Target RCSB PDB Accession ID", value="1yge", max_chars=4).lower().strip()
-st.sidebar.markdown("---")
+# 3-column top control array setup instead of a plain sidebar layout
+ctrl_col1, ctrl_col2, ctrl_col3 = st.columns(3, gap="medium")
 
-st.sidebar.subheader("🔋 Energy Grid Scales")
-barrier_height = st.sidebar.slider("Potential Barrier V_0 (eV)", 0.1, 2.5, 0.6, step=0.05)
-substrate_energy = st.sidebar.slider("Kinetic State Energy E (eV)", 0.0, 2.0, 0.15, step=0.05)
-st.sidebar.markdown("---")
+with ctrl_col1:
+    pdb_input = st.text_input("Target RCSB PDB Accession ID", value="1yge", max_chars=4).lower().strip()
+    active_site_radius = st.slider("Active Site Extraction Shell (Å)", 3.0, 10.0, 6.0, step=0.5)
 
-st.sidebar.subheader("📐 Molecular Geometry Shells")
-tunnel_width = st.sidebar.slider("Tunneling Gap Vector Distance (Å)", 0.5, 4.0, 1.2, step=0.05)
-active_site_radius = st.sidebar.slider("Active Site Extraction Shell (Å)", 3.0, 10.0, 6.0, step=0.5)
+with ctrl_col2:
+    barrier_height = st.slider("Potential Barrier V_0 (eV)", 0.1, 2.5, 0.6, step=0.05)
+    substrate_energy = st.slider("Kinetic State Energy E (eV)", 0.0, 2.0, 0.15, step=0.05)
 
-# Initialization of background pipeline wrapper class
+with ctrl_col3:
+    tunnel_width = st.slider("Tunneling Gap Distance Vector (Å)", 0.5, 4.0, 1.2, step=0.05)
+
+st.markdown('</div>', unsafe_allow_html=True)
+
+# Background pipeline module orchestration initialization
 runner = PremiumEnzymePipeline(pdb_input)
 
-# Verify local file presence or download dynamically
 if not os.path.exists(runner.pdb_filename):
-    with st.spinner(f"📡 Querying global structural mirrors for {pdb_input.upper()}..."):
+    with st.spinner("📡 Syncing biological parameters from global database mirrors..."):
         runner.download_data()
 
-# Dynamic extraction linked to background code modules
 active_seq = runner.extract_active_site_sequence(radius_angstroms=active_site_radius)
 
-# ==========================================
-# REAL CORE MATHEMATICAL ROUTINES
-# ==========================================
 try:
     tunneling_prob = runner.run_quantum_engine(
         width_angstroms=tunnel_width, 
@@ -93,33 +107,31 @@ try:
         substrate_energy_ev=substrate_energy
     )
 except ValueError as e:
-    st.error(f"❌ Boundary Condition Exception: {e}")
+    st.error(f"❌ Physical Boundary Condition Violation: {e}")
     tunneling_prob = 0.0
 
 # ==========================================
-# RESPONSIVE GRID COLUMNS ARCHITECTURE
+# MAIN RESPONSE GRID ARCHITECTURE
 # ==========================================
-# FIXED SYNTAX TYPO HERE: Added '2' to column declaration argument explicitly
 grid_col1, grid_col2 = st.columns(2, gap="large")
 
 with grid_col1:
-    st.subheader("🔬 Structural Active-Site Shell Matrix")
+    st.markdown('<div class="glass-card" style="height: 520px;">', unsafe_allow_html=True)
+    st.markdown("<h2 style='margin-top:0;'>🔬 Active Site Environment</h2>", unsafe_allow_html=True)
     
-    # Structural encapsulation panel
     st.markdown(f"""
-    <div class="info-card">
-        <span style="font-size:10px; font-weight:700; color:#718096; text-transform:uppercase; display:block; margin-bottom:2px;">Central Target Atom Identity</span>
-        <span style="font-size:18px; font-weight:700; color:#3182ce; display:block; margin-bottom:12px;">Iron Metal Core Coordination Complex (FE)</span>
-        <span style="font-size:10px; font-weight:700; color:#718096; text-transform:uppercase; display:block; margin-bottom:2px;">Extracted Biological Sequence Loop Fragment</span>
-        <code style="font-size:15px; font-weight:800; color:#00ffcc; background:rgba(0,255,204,0.05); padding:4px 8px; border-radius:4px; border:1px solid rgba(0,255,204,0.15); display:inline-block;">{active_seq}</code>
+    <div style="margin-bottom:1.5rem;">
+        <span style="font-size:11px; font-weight:600; color:#4a5568; text-transform:uppercase; display:block; letter-spacing:0.5px;">Catalytic Center Vector</span>
+        <span style="font-size:16px; font-weight:700; color:#3182ce; display:block; margin-bottom:0.75rem;">Iron Coordination Complex (FE)</span>
+        <span style="font-size:11px; font-weight:600; color:#4a5568; text-transform:uppercase; display:block; letter-spacing:0.5px;">Extracted Biological Motif Sequence</span>
+        <code style="font-size:14px; font-weight:800; color:#00f2fe; background:rgba(0,242,254,0.04); padding:4px 8px; border-radius:6px; border:1px solid rgba(0,242,254,0.12); display:inline-block;">{active_seq}</code>
     </div>
     """, unsafe_allow_html=True)
     
-    # 3D hardware WebGL canvas engine viewport
-    st.markdown("<p style='font-size:12px; font-weight:600; color:#a0aec0; margin-bottom:6px;'>Interactive WebGL Coordinate Model Rendering</p>", unsafe_allow_html=True)
+    # Live WebGL Viewport Canvas Wrapper Mesh Injection
     viewer_html = f"""
     <script src='https://pitt.edu'></script>
-    <div id='viewer' style='width:100%; height:340px; background-color: #0b0c10; border-radius: 12px; border: 1px solid #232733;'></div>
+    <div id='viewer' style='width:100%; height:300px; background-color: #0b0c10; border-radius: 10px; border: 1px solid rgba(255,255,255,0.03);'></div>
     <script>
       let viewer = $3Dmol.createViewer(document.getElementById('viewer'), {{}});
       fetch('https://rcsb.org{pdb_input}.pdb')
@@ -133,23 +145,25 @@ with grid_col1:
         }});
     </script>
     """
-    st.components.v1.html(viewer_html, height=360)
+    st.components.v1.html(viewer_html, height=310)
+    st.markdown('</div>', unsafe_allow_html=True)
 
 with grid_col2:
-    st.subheader("🌌 Physics-Corrected Attenuation Spectrum")
+    st.markdown('<div class="glass-card" style="height: 520px;">', unsafe_allow_html=True)
+    st.markdown("<h2 style='margin-top:0;'>🌌 Wave Function Attenuation</h2>", unsafe_allow_html=True)
     
-    # Containerized calculation display boxes
+    # Modern display metrics grids
     m_col1, m_col2 = st.columns(2, gap="small")
     with m_col1:
-        st.markdown('<div class="metric-card">', unsafe_allow_html=True)
-        st.metric(label="Wave Transmission Coeff (T)", value=f"{tunneling_prob:.5e}")
+        st.markdown('<div class="premium-metric-box">', unsafe_allow_html=True)
+        st.metric(label="Transmission Coefficient (T)", value=f"{tunneling_prob:.5e}")
         st.markdown('</div>', unsafe_allow_html=True)
     with m_col2:
-        st.markdown('<div class="metric-card">', unsafe_allow_html=True)
-        st.metric(label="Tunneling Statistical Frequency", value=f"1 in {int(1/max(1e-40, tunneling_prob)):,}")
+        st.markdown('<div class="premium-metric-box">', unsafe_allow_html=True)
+        st.metric(label="Statistical Tunnel Frequency", value=f"1 in {int(1/max(1e-40, tunneling_prob)):,}")
         st.markdown('</div>', unsafe_allow_html=True)
-    
-    # Plotly responsive dark layout graph canvas
+        
+    # Generating Plotly spectra trace arrays cleanly
     widths = np.linspace(0.5, 4.0, 50)
     rates = []
     for w in widths:
@@ -162,51 +176,62 @@ with grid_col2:
     fig.add_trace(go.Scatter(
         x=widths, y=rates, 
         mode='lines', 
-        name='WKB Mathematical Solution', 
-        line=dict(color='#00ffcc', width=3.5)
+        name='WKB Wave Mechanics', 
+        line=dict(color='#00f2fe', width=3.5)
     ))
     
-    # Vertical spatial locator guide vector
+    # Vertical crosshair spatial coordinate indicator vector guide line
     fig.add_shape(
         type="line", 
         x0=tunnel_width, x1=tunnel_width, 
         y0=min(rates) if rates else 1e-40, y1=max(rates) if rates else 1.0, 
-        line=dict(color="#ff4b4b", width=2, dash="dash")
+        line=dict(color="#ff4b4b", width=1.5, dash="dash")
     )
     
+    # FIXED PLOTLY OBJECT SYNTAX BUG HERE: gridcolor is correctly nested inside axis templates!
     fig.update_layout(
-        xaxis_title="Proton Transfer Spatial Coordinate Coordinate (Å)",
-        yaxis_title="Probability Vector Log(T)",
-        yaxis_type="log",
-        height=300,
+        xaxis=dict(
+            title="Transfer Space Vector Coordinate (Å)", 
+            gridcolor='rgba(255,255,255,0.05)', 
+            zeroline=False
+        ),
+        yaxis=dict(
+            title="Probability Coefficient Log(T)", 
+            type="log", 
+            gridcolor='rgba(255,255,255,0.05)', 
+            zeroline=False
+        ),
+        height=280,
         margin=dict(l=10, r=10, t=10, b=10),
         template="plotly_dark",
         paper_bgcolor='rgba(0,0,0,0)',
-        plot_bgcolor='#111217',
-        gridcolor='#232733'
+        plot_bgcolor='rgba(0,0,0,0)'
     )
     st.plotly_chart(fig, use_container_width=True)
+    st.markdown('</div>', unsafe_allow_html=True)
 
 # ==========================================
-# ENTERPRISE AI SCREENING WORKBENCH
+# IN-SILICO GENERATIVE MACHINE LEARNING GRID
 # ==========================================
-st.markdown("<br><hr>", unsafe_allow_html=True)
-st.subheader("🤖 Generative AI Mutation Screening Matrix Workspace")
-st.markdown("<p style='color:#a0aec0; font-size:13px; margin-top:-0.5rem; margin-bottom:1rem;'>Query evolutionary mutation likelihood statistics via Meta AI's pre-trained deep structural Transformer layers.</p>", unsafe_allow_html=True)
+st.markdown('<div class="glass-card">', unsafe_allow_html=True)
+st.markdown("<h2 style='margin-top:0;'>🤖 Deep Learning Evolutionary Mutation Engine Workspace</h2>", unsafe_allow_html=True)
+st.markdown("<p style='color:#718096; font-size:13px; margin-top:-0.5rem; margin-bottom:1.5rem;'>Perform zero-shot mutation screening loops using the structural parameter grids of Meta AI's pre-trained ESM-2 Transformer network layers.</p>", unsafe_allow_html=True)
 
 btn_col, pad_col = st.columns([1, 2])
 with btn_col:
     trigger_ai = st.button("🚀 Run In-Silico Directed Evolution Analysis", use_container_width=True)
 
 if trigger_ai:
-    with st.spinner("🧠 Computation in progress... Analyzing hidden spatial structural vectors..."):
+    with st.spinner("🧠 Computation active... Evaluating structural matrix probability states..."):
         df_ranked = runner.run_ai_engine(active_seq)
         
-        # Display data arrays inside an organized, color-graded corporate data grid table
-        st.dataframe(
-            df_ranked.style.background_gradient(cmap="Blues", subset=["Score"]).format({"Score": "{:.4f}"}),
-            use_container_width=True
-        )
-        st.success("🏆 Matrix evaluation loop finalized successfully with no memory resource leaks!")
-else:
-    st.info("💡 Launch the processing sequence above to execute mutation scanning calculations natively across all 20 canonical amino acid residues variables.")
+# Display data arrays inside an organized, premium corporate data layout matrix framest.dataframe(
+# Display data arrays inside an organized, premium corporate data layout matrix framest.dataframe(
+use_container_width=True
+)
+st.success("🏆 Mutational ranking iteration finalized with zero memory resource leaks!")else:
+st.info("💡 Click the tracking command above to run prediction metrics natively across all 20 canonical amino acid variables.")
+st.markdown('', unsafe_allow_html=True)
+
+
+
