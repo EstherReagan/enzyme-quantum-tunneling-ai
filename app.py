@@ -6,95 +6,108 @@ import plotly.graph_objects as go
 from pipeline import PremiumEnzymePipeline
 
 # ==========================================
-# PAGE VIEWS & DARK SAPPHIRE CUSTOM ENGINE THEME
+# PAGE VIEWS & DEEP TECH CYBER LAYOUT
 # ==========================================
 st.set_page_config(
     layout="wide", 
-    page_title="Quantum Enzyme AI Hub",
+    page_title="QUANTUM ENZYME MATRIX v1.0",
     initial_sidebar_state="collapsed"
 )
 
-# Premium Custom CSS Injection for a sleek, enterprise SaaS interface
+# Enterprise Sci-Fi Cyber UI Theme Stylesheet
 st.markdown("""
 <style>
-    /* Global Background Override */
-    .stApp { background-color: #0d0e12; color: #f1f3f9; }
-    .block-container { padding-top: 2rem; padding-bottom: 2rem; max-width: 90%; }
+    /* Base Global Dark Space Styles */
+    @import url('https://googleapis.com');
     
-    /* Elegant Dark Sapphire Glassmorphism Containers */
-    .glass-card {
-        background: rgba(20, 24, 33, 0.65);
-        border: 1px solid rgba(255, 255, 255, 0.05);
-        border-radius: 16px;
-        padding: 1.75rem;
-        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-        backdrop-filter: blur(8px);
-        -webkit-backdrop-filter: blur(8px);
-        margin-bottom: 1.5rem;
+    .stApp { background-color: #06070d; color: #a5b4fc; }
+    .block-container { padding-top: 1.5rem; padding-bottom: 1.5rem; max-width: 95%; }
+    
+    /* Neon Cyber HUD Container Cards */
+    .hud-card {
+        background: linear-gradient(180deg, rgba(10, 15, 30, 0.85) 0%, rgba(5, 7, 15, 0.95) 100%);
+        border: 1px solid rgba(0, 242, 254, 0.15);
+        border-radius: 8px;
+        padding: 1.5rem;
+        box-shadow: 0 0 20px rgba(0, 242, 254, 0.05), inset 0 0 15px rgba(0, 242, 254, 0.02);
+        margin-bottom: 1.25rem;
     }
     
-    /* Premium Minimal Metrics */
-    .premium-metric-box {
-        background: linear-gradient(135deg, rgba(29, 36, 51, 0.5) 0%, rgba(17, 22, 31, 0.5) 100%);
-        border: 1px solid rgba(255, 255, 255, 0.03);
-        border-radius: 12px;
-        padding: 1.25rem;
-        text-align: left;
+    .hud-card-accent {
+        border-top: 3px solid #00f2fe !important;
     }
     
-    /* Typography Overrides */
-    h1 { font-family: 'Inter', sans-serif; font-weight: 800; color: #ffffff; letter-spacing: -1px; margin-bottom: 0.5rem; }
-    h2 { font-family: 'Inter', sans-serif; font-weight: 700; color: #ffffff; margin-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 0.5rem; }
-    h3 { font-family: 'Inter', sans-serif; font-weight: 600; color: #a0aec0; margin-bottom: 0.75rem; }
+    .hud-card-green {
+        border: 1px solid rgba(0, 255, 157, 0.15);
+        box-shadow: 0 0 20px rgba(0, 255, 157, 0.05);
+    }
     
-    /* Modern Form Elements Overrides */
-    div[data-testid="stMetricLabel"] p { font-size: 11px !important; text-transform: uppercase; letter-spacing: 1px; color: #718096 !important; font-weight: 600; }
-    div[data-testid="stMetricValue"] div { font-size: 26px !important; font-weight: 700 !important; color: #00f2fe !important; }
+    /* Deep Tech Minimal Numerical Matrices */
+    .tech-metric-panel {
+        background: rgba(0, 0, 0, 0.4);
+        border-left: 3px solid #00f2fe;
+        padding: 0.75rem 1rem;
+        border-radius: 0 6px 6px 0;
+        margin-bottom: 0.75rem;
+    }
     
-    /* Hide Default UI Artifacts */
-    #MainMenu {visibility: hidden;}
-    footer {visibility: hidden;}
+    /* Specialized Typography Overrides */
+    .tech-title { font-family: 'Orbitron', sans-serif; font-weight: 700; color: #ffffff; letter-spacing: 2px; text-transform: uppercase; text-shadow: 0 0 10px rgba(0,242,254,0.3); margin: 0; }
+    .tech-subtitle { font-family: 'Share Tech Mono', monospace; color: #00f2fe; font-size: 13px; letter-spacing: 1px; margin-bottom: 1.5rem; }
+    .section-header { font-family: 'Orbitron', sans-serif; font-size: 14px; font-weight: 700; color: #ffffff; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 1rem; padding-bottom: 0.25rem; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    
+    /* Clean System Parameter Sliders */
+    .stSlider label, .stTextInput label { font-family: 'Share Tech Mono', monospace !important; color: #8492a6 !important; text-transform: uppercase; font-size: 11px !important; letter-spacing: 0.5px; }
+    
+    /* Data Grid Adjustments */
+    div[data-testid="stDataFrame"] { border: 1px solid rgba(0, 242, 254, 0.1) !important; border-radius: 6px; }
+    
+    /* Interactive Status Indicators */
+    .status-badge { font-family: 'Share Tech Mono', monospace; font-size: 10px; background: rgba(0, 255, 157, 0.1); color: #00ff9d; padding: 2px 6px; border-radius: 3px; border: 1px solid rgba(0, 255, 157, 0.2); }
 </style>
 """, unsafe_allow_html=True)
 
 # ==========================================
-# ENTERPRISE MASTER APP HEADER
+# SYSTEM HEADER STATUS HEADER
 # ==========================================
 st.markdown("""
-<div style="margin-bottom: 2.5rem;">
-    <h1>Quantum Enzyme Tunneling Engine & AI Mutation Platform</h1>
-    <p style="color:#718096; margin:0; font-size:14px; font-weight: 500; letter-spacing: 0.5px;">
-        PRODUCTION-GRADE QUANTITATIVE BIOLOGY & IN-SILICO MOLECULAR DESIGN MATRIX
-    </p>
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; border-bottom: 1px solid rgba(0,242,254,0.1); padding-bottom: 0.75rem;">
+    <div>
+        <h1 class="tech-title">🧬 Quantum Enzyme Analytics Workspace</h1>
+        <p class="tech-subtitle">SYSTEM STATUS: ACTIVE // ENGINE MATRIX VER v1.0.3 // REAGAN CO-PILOT PIPELINE</p>
+    </div>
+    <div>
+        <span class="status-badge">🟢 CORE MODULE ONLINE</span>
+    </div>
 </div>
 """, unsafe_allow_html=True)
 
 # ==========================================
-# INTEGRATED APP PANEL CONTROLS (UNIFIED UI)
+# INTEGRATED APP PANEL CONTROLS (UNIFIED CONSOLE)
 # ==========================================
-st.markdown('<div class="glass-card">', unsafe_allow_html=True)
-st.markdown("<h3 style='margin-top:0; color:#ffffff;'>🎛️ Simulation Parameters Control Console</h3>", unsafe_allow_html=True)
+st.markdown('<div class="hud-card hud-card-accent">', unsafe_allow_html=True)
+st.markdown("<p style='font-family:\"Orbitron\", sans-serif; font-size:12px; font-weight:700; color:#ffffff; margin-top:0; margin-bottom:1rem; letter-spacing:1px;'>🎛️ HUD INTERFACE RUNTIME CONTROLS</p>", unsafe_allow_html=True)
 
 ctrl_col1, ctrl_col2, ctrl_col3 = st.columns(3, gap="medium")
 
 with ctrl_col1:
-    pdb_input = st.text_input("Target RCSB PDB Accession ID", value="1yge", max_chars=4).lower().strip()
-    active_site_radius = st.slider("Active Site Extraction Shell (Å)", 3.0, 10.0, 6.0, step=0.5)
+    pdb_input = st.text_input("🧬 Target Accession PDB ID", value="1yge", max_chars=4).lower().strip()
+    active_site_radius = st.slider("📐 Shell Extraction Radius (Å)", 3.0, 10.0, 6.0, step=0.5)
 
 with ctrl_col2:
-    barrier_height = st.slider("Potential Barrier V_0 (eV)", 0.1, 2.5, 0.6, step=0.05)
-    substrate_energy = st.slider("Kinetic State Energy E (eV)", 0.0, 2.0, 0.15, step=0.05)
+    barrier_height = st.slider("🔋 Potential Barrier Max V_0 (eV)", 0.1, 2.5, 0.6, step=0.05)
+    substrate_energy = st.slider("⚡ Particle Kinetic State E (eV)", 0.0, 2.0, 0.15, step=0.05)
 
 with ctrl_col3:
-    tunnel_width = st.slider("Tunneling Gap Distance Vector (Å)", 0.5, 4.0, 1.2, step=0.05)
+    tunnel_width = st.slider("⚛️ Quantum Tunneling Width (Å)", 0.5, 4.0, 1.2, step=0.05)
 
 st.markdown('</div>', unsafe_allow_html=True)
 
-# Background pipeline module orchestration initialization
+# Pipeline computational backend loading orchestration
 runner = PremiumEnzymePipeline(pdb_input)
 
 if not os.path.exists(runner.pdb_filename):
-    with st.spinner("📡 Syncing biological parameters from global database mirrors..."):
+    with st.spinner("📡 Fetching coordinate parameters from PDB data bank..."):
         runner.download_data()
 
 active_seq = runner.extract_active_site_sequence(radius_angstroms=active_site_radius)
@@ -106,31 +119,39 @@ try:
         substrate_energy_ev=substrate_energy
     )
 except ValueError as e:
-    st.error(f"❌ Physical Boundary Condition Violation: {e}")
+    st.error(f"❌ Physical Boundary Violation: {e}")
     tunneling_prob = 0.0
 
 # ==========================================
-# MAIN RESPONSE GRID ARCHITECTURE
+# MAIN HUD DATA VIEW GRID ARCHITECTURE
 # ==========================================
 grid_col1, grid_col2 = st.columns(2, gap="large")
 
 with grid_col1:
-    st.markdown('<div class="glass-card" style="height: 520px;">', unsafe_allow_html=True)
-    st.markdown("<h2 style='margin-top:0;'>🔬 Active Site Environment</h2>", unsafe_allow_html=True)
+    st.markdown('<div class="hud-card" style="height: 520px;">', unsafe_allow_html=True)
+    st.markdown("<div class='section-header'>🔬 Active Structural Core Geometry</div>", unsafe_allow_html=True)
     
-    st.markdown(f"""
-    <div style="margin-bottom:1.5rem;">
-        <span style="font-size:11px; font-weight:600; color:#4a5568; text-transform:uppercase; display:block; letter-spacing:0.5px;">Catalytic Center Vector</span>
-        <span style="font-size:16px; font-weight:700; color:#3182ce; display:block; margin-bottom:0.75rem;">Iron Coordination Complex (FE)</span>
-        <span style="font-size:11px; font-weight:600; color:#4a5568; text-transform:uppercase; display:block; letter-spacing:0.5px;">Extracted Biological Motif Sequence</span>
-        <code style="font-size:14px; font-weight:800; color:#00f2fe; background:rgba(0,242,254,0.04); padding:4px 8px; border-radius:6px; border:1px solid rgba(0,242,254,0.12); display:inline-block;">{active_seq}</code>
-    </div>
-    """, unsafe_allow_html=True)
+    # Grid parameter arrays
+    sub_col1, sub_col2 = st.columns(2)
+    with sub_col1:
+        st.markdown(f"""
+        <div class="tech-metric-panel">
+            <span style="font-family:'Share Tech Mono', monospace; font-size:10px; color:#718096; display:block;">TARGET COFACTOR</span>
+            <span style="font-family:'Orbitron', sans-serif; font-size:14px; font-weight:700; color:#ffffff;">Iron Center (FE)</span>
+        </div>
+        """, unsafe_allow_html=True)
+    with sub_col2:
+        st.markdown(f"""
+        <div class="tech-metric-panel" style="border-left-color: #00ff9d;">
+            <span style="font-family:'Share Tech Mono', monospace; font-size:10px; color:#718096; display:block;">SEQUENCE MOTIF</span>
+            <span style="font-family:'Share Tech Mono', monospace; font-size:14px; font-weight:700; color:#00ff9d;">{active_seq}</span>
+        </div>
+        """, unsafe_allow_html=True)
     
-    # Live WebGL Viewport Canvas Wrapper Mesh Injection
+    # 3D hardware WebGL coordinate matrix layout viewer
     viewer_html = f"""
     <script src='https://pitt.edu'></script>
-    <div id='viewer' style='width:100%; height:300px; background-color: #0b0c10; border-radius: 10px; border: 1px solid rgba(255,255,255,0.03);'></div>
+    <div id='viewer' style='width:100%; height:320px; background-color: #08090d; border-radius: 6px; border: 1px solid rgba(0,242,254,0.1);'></div>
     <script>
       let viewer = $3Dmol.createViewer(document.getElementById('viewer'), {{}});
       fetch('https://rcsb.org{pdb_input}.pdb')
@@ -144,25 +165,31 @@ with grid_col1:
         }});
     </script>
     """
-    st.components.v1.html(viewer_html, height=310)
+    st.components.v1.html(viewer_html, height=330)
     st.markdown('</div>', unsafe_allow_html=True)
 
 with grid_col2:
-    st.markdown('<div class="glass-card" style="height: 520px;">', unsafe_allow_html=True)
-    st.markdown("<h2 style='margin-top:0;'>🌌 Wave Function Attenuation</h2>", unsafe_allow_html=True)
+    st.markdown('<div class="hud-card" style="height: 520px;">', unsafe_allow_html=True)
+    st.markdown("<div class='section-header'>🌌 Real-Time Quantum Wave Attenuation Spectrum</div>", unsafe_allow_html=True)
     
-    # Modern display metrics grids
-    m_col1, m_col2 = st.columns(2, gap="small")
+    # Modernized science layout panels
+    m_col1, m_col2 = st.columns(2)
     with m_col1:
-        st.markdown('<div class="premium-metric-box">', unsafe_allow_html=True)
-        st.metric(label="Transmission Coefficient (T)", value=f"{tunneling_prob:.5e}")
-        st.markdown('</div>', unsafe_allow_html=True)
+        st.markdown(f"""
+        <div class="tech-metric-panel">
+            <span style="font-family:'Share Tech Mono', monospace; font-size:10px; color:#718096; display:block;">TRANSMISSION COEFFICIENT (T)</span>
+            <span style="font-family:'Orbitron', sans-serif; font-size:16px; font-weight:700; color:#00f2fe;">{tunneling_prob:.5e}</span>
+        </div>
+        """, unsafe_allow_html=True)
     with m_col2:
-        st.markdown('<div class="premium-metric-box">', unsafe_allow_html=True)
-        st.metric(label="Statistical Tunnel Frequency", value=f"1 in {int(1/max(1e-40, tunneling_prob)):,}")
-        st.markdown('</div>', unsafe_allow_html=True)
+        st.markdown(f"""
+        <div class="tech-metric-panel" style="border-left-color: #ff4b4b;">
+            <span style="font-family:'Share Tech Mono', monospace; font-size:10px; color:#718096; display:block;">PROBABILITY SCALE RATIO</span>
+            <span style="font-family:'Orbitron', sans-serif; font-size:15px; font-weight:700; color:#ff4b4b;">1 in {int(1/max(1e-40, tunneling_prob)):,}</span>
+        </div>
+        """, unsafe_allow_html=True)
         
-    # Generating Plotly spectra trace arrays cleanly
+    # Plotly analytical curve generation trace
     widths = np.linspace(0.5, 4.0, 50)
     rates = []
     for w in widths:
@@ -175,55 +202,22 @@ with grid_col2:
     fig.add_trace(go.Scatter(
         x=widths, y=rates, 
         mode='lines', 
-        name='WKB Wave Mechanics', 
-        line=dict(color='#00f2fe', width=3.5)
+        name='Schrödinger Solution Matrix', 
+        line=dict(color='#00f2fe', width=3)
     ))
     
     fig.add_shape(
         type="line", 
         x0=tunnel_width, x1=tunnel_width, 
         y0=min(rates) if rates else 1e-40, y1=max(rates) if rates else 1.0, 
-        line=dict(color="#ff4b4b", width=1.5, dash="dash")
+        line=dict(color="#ff4b4b", width=1.5, dash="dot")
     )
     
     fig.update_layout(
         xaxis=dict(
-            title="Transfer Space Vector Coordinate (Å)", 
-            gridcolor='rgba(255,255,255,0.05)', 
+            title=dict(text="TRANSFER SHELL DISTANCE (Å)", font=dict(family='Share Tech Mono', size=11, color='#8492a6')),
+            gridcolor='rgba(0,242,254,0.05)', 
             zeroline=False
         ),
         yaxis=dict(
-            title="Probability Coefficient Log(T)", 
-            type="log", 
-            gridcolor='rgba(255,255,255,0.05)', 
-            zeroline=False
-        ),
-        height=280,
-        margin=dict(l=10, r=10, t=10, b=10),
-        template="plotly_dark",
-        paper_bgcolor='rgba(0,0,0,0)',
-        plot_bgcolor='rgba(0,0,0,0)'
-    )
-    st.plotly_chart(fig, use_container_width=True)
-    st.markdown('</div>', unsafe_allow_html=True)
-
-# ==========================================
-# IN-SILICO GENERATIVE MACHINE LEARNING GRID
-# ==========================================
-st.markdown('<div class="glass-card">', unsafe_allow_html=True)
-st.markdown("<h2 style='margin-top:0;'>🤖 Deep Learning Evolutionary Mutation Engine Workspace</h2>", unsafe_allow_html=True)
-st.markdown("<p style='color:#718096; font-size:13px; margin-top:-0.5rem; margin-bottom:1.5rem;'>Perform zero-shot mutation screening loops using the structural parameter grids of Meta AI's pre-trained ESM-2 Transformer network layers.</p>", unsafe_allow_html=True)
-
-btn_col, dl_col = st.columns(2, gap="medium")
-with btn_col:
-    trigger_ai = st.button("🚀 Run In-Silico Directed Evolution Analysis", use_container_width=True)
-
-if trigger_ai:
-    with st.spinner("🧠 Computation active... Evaluating structural matrix probability states..."):
-        df_ranked = runner.run_ai_engine(active_seq)
-        
-        # Display data arrays inside an organized layout matrix frame
-        st.dataframe(
-            df_ranked.style.background_gradient(cmap="Blues", subset=["Score"]).format({"Score": "{:.4f}"}),
-            use_container_width=True
-        )
+            title=dict(text="ATTENUATION VECTOR LOG(T)", font=dict(family='Share Tech Mono', size=11, color='#8492a6')),
