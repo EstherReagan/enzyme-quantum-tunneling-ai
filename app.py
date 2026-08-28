@@ -168,12 +168,14 @@ with col_left:
     st.markdown("<div class='sci-card'>", unsafe_allow_html=True)
     st.markdown("<div class='panel-tag'>AI ENGINE MUTATION LOGS (ESM-2 ALIGNMENT)</div>", unsafe_allow_html=True)
     
-    # Generate mock AI sequence scores tied into your PDB search input
+        # Generate mock AI sequence scores tied into your PDB search input
     data_mutations = {
         "Position":,
         "Native": ["ALA", "LEU", "TYR", "GLY"],
         "Mutation": ["VAL", "ILE", "PHE", "ALA"],
         "Score Delta": [f"+{barrier_height*0.14:.3f}", f"+{barrier_width*0.22:.3f}", "-0.041", "+0.118"]
+    
+
     }
     df_mutations = pd.DataFrame(data_mutations)
     st.dataframe(df_mutations, use_container_width=True, hide_index=True)
