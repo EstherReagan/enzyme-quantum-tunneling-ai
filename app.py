@@ -213,11 +213,25 @@ with grid_col2:
         line=dict(color="#ff4b4b", width=1.5, dash="dot")
     )
     
+        # Clean, balanced Plotly layout config
     fig.update_layout(
         xaxis=dict(
-            title=dict(text="TRANSFER SHELL DISTANCE (Å)", font=dict(family='Share Tech Mono', size=11, color='#8492a6')),
+            title=dict(text="TRANSFER SHELL DISTANCE (A)", font=dict(family='Share Tech Mono', size=11, color='#8492a6')),
             gridcolor='rgba(0,242,254,0.05)', 
             zeroline=False
         ),
         yaxis=dict(
             title=dict(text="ATTENUATION VECTOR LOG(T)", font=dict(family='Share Tech Mono', size=11, color='#8492a6')),
+            type="log", 
+            gridcolor='rgba(0,242,254,0.05)', 
+            zeroline=False
+        ),
+        height=300,
+        margin=dict(l=10, r=10, t=10, b=10),
+        template="plotly_dark",
+        paper_bgcolor='rgba(0,0,0,0)',
+        plot_bgcolor='rgba(0,0,0,0)'
+    )
+    st.plotly_chart(fig, use_container_width=True)
+    st.markdown('</div>', unsafe_allow_html=True)
+
