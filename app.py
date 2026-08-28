@@ -1,4 +1,3 @@
-pip install streamlit streamlit-echarts st-annotated-text
 import streamlit as st
 from streamlit_echarts import st_echarts
 import random
