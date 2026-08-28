@@ -1,11 +1,12 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 import numpy as np
 import scipy.constants as const
 
 app = FastAPI(title="Enzyme Quantum Backend API")
 
-# Allow your frontend dashboard to communicate with this server securely
+# Direct global policy adjustments to ensure Vercel can fetch data arrays safely
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -14,6 +15,14 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+@app.middleware("http")
+async def add_custom_cors_headers(request, call_next):
+    response = await call_next(request)
+    response.headers["Access-Control-Allow-Origin"] = "*"
+    response.headers["Access-Control-Allow-Methods"] = "GET, POST, OPTIONS"
+    response.headers["Access-Control-Allow-Headers"] = "*"
+    return response
+
 @app.get("/")
 def home():
     return {"status": "Quantum Engine Operational"}
@@ -21,7 +30,7 @@ def home():
 @app.get("/api/calculate")
 def calculate(pdb_id: str, width: float, height: float):
     try:
-        # Real WKB physical quantum tunneling computations
+        # WKB numerical approximation equations
         hbar = const.hbar
         m_p = const.m_p
         eV_to_joule = 1.60218e-19
@@ -41,7 +50,6 @@ def calculate(pdb_id: str, width: float, height: float):
         stability = round(1.0 - (transmission_coef * 4e33), 3)
         velocity = round(8.4 * width, 1)
 
-        # Matrix algorithm mapping corresponding to ESM-2 alignment output variables
         mutations = [
             {"Position": 42, "Native": "ALA", "Mutation": "VAL", "Score": f"+{height*0.14:.3f}"},
             {"Position": 88, "Native": "LEU", "Mutation": "ILE", "Score": f"+{width*0.22:.3f}"},
@@ -49,11 +57,12 @@ def calculate(pdb_id: str, width: float, height: float):
             {"Position": 201, "Native": "GLY", "Mutation": "ALA", "Score": "+0.118"}
         ]
 
-        return {
+        payload = {
             "viability": viability,
             "stability": stability,
             "velocity": velocity,
             "mutations": mutations
         }
+        return JSONResponse(content=payload, headers={"Access-Control-Allow-Origin": "*"})
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
