@@ -1,8 +1,7 @@
-streamlit>=1.28.0
-numpy
+fastapi
+uvicorn
 pandas
-biopython
-plotly
+numpy
 scipy
 requests
-streamlit-echarts>=0.0.1
+gunicorn
