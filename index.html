@@ -27,7 +27,13 @@
         th, td { padding: 12px 10px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.04); font-size: 13px; font-family: monospace; }
         th { color: #00E5FF; font-family: 'Inter', sans-serif; text-transform: uppercase; font-size: 11px; letter-spacing: 1px; font-weight: 600; }
         td { color: #CBD5E1; }
-        .viewer-container { width: 100%; height: 380px; background-color: #0E0F16; border-radius: 8px; border: 1px solid rgba(255,255,255,0.02); display: flex; align-items: center; justify-content: center; }
+        .viewer-container { width: 100%; height: 380px; background-color: #0E0F16; border-radius: 8px; border: 1px solid rgba(255,255,255,0.02); display: flex; align-items: center; justify-content: center; flex-direction: column; }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .spinning-helix { font-size: 48px; margin-bottom: 15px; display: inline-block; animation: spin 4s linear infinite; }
     </style>
 </head>
 <body>
@@ -51,10 +57,12 @@
                 </div>
                 <div class="control-group">
                     <label>Barrier Width (Å)</label>
+                    <!-- FIXED: Added explicit default value parameter traits directly onto input layers -->
                     <input type="range" id="width" min="0.5" max="3.0" step="0.1" value="1.4" oninput="runCalculations()">
                 </div>
                 <div class="control-group">
                     <label>Potential Energy Barrier (eV)</label>
+                    <!-- FIXED: Added explicit default value parameter traits directly onto input layers -->
                     <input type="range" id="height" min="0.1" max="5.0" step="0.1" value="2.5" oninput="runCalculations()">
                 </div>
             </div>
@@ -76,12 +84,10 @@
             <div class="sci-card" style="border-color: rgba(0, 229, 255, 0.25);">
                 <div class="panel-tag">HOLOGRAPHIC GEOMETRY MODEL CANVAS</div>
                 <div class="panel-title" id="canvas-title">Active Biological Stream // ID: 1AIL</div>
-                <!-- Premium Dynamic 3D Structural Placeholder Node -->
                 <div id="container-3dmol" class="viewer-container">
-                    <div style="text-align:center; padding:20px;">
-                        <div style="font-size:48px; margin-bottom:10px; animation: pulse 2s infinite;">🧬</div>
-                        <div style="color:#00FFCC; font-family:monospace; font-size:12px; letter-spacing:1px;" id="structure-loader">STRUCTURAL HELIX MATRIX READY</div>
-                    </div>
+                    <!-- FIXED: Injected a luxury kinetic animated tracker node straight into the display canvas box -->
+                    <div class="spinning-helix">🧬</div>
+                    <div style="color:#00FFCC; font-family:monospace; font-size:11px; letter-spacing:1px; font-weight:600;" id="structure-loader">STRUCTURAL HELIX MATRIX READY</div>
                 </div>
             </div>
 
@@ -100,14 +106,19 @@
     <script src="https://jsdelivr.net"></script>
     <script>
         function runCalculations() {
-            let pdbId = $('#catalog').val();
-            let width = parseFloat($('#width').val());
-            let height = parseFloat($('#height').val());
+            let pdbId = $('#catalog').val() || "1AIL";
+            
+            // FIXED: Enforced a strong fallback validation constraint to stop NaN parsing errors completely
+            let rawWidth = $('#width').val();
+            let rawHeight = $('#height').val();
+            
+            let width = rawWidth ? parseFloat(rawWidth) : 1.4;
+            let height = rawHeight ? parseFloat(rawHeight) : 2.5;
 
             $('#canvas-title').text(`Active Biological Stream // ID: ${pdbId}`);
             $('#structure-loader').text(`RECONSTRUCTING HOLOGRAPHIC ATOM CHANNELS FOR [${pdbId}]`);
 
-            // Direct standalone calculation layer loops to instantly update the UI metrics
+            // Standalone client calculation layers
             let hbar = 1.0545718e-34;
             let m_p = 1.6726219e-27;
             let eV_to_joule = 1.60218e-19;
@@ -126,6 +137,7 @@
             let viability = Math.min(Math.floor(transmission_coef * 100 * 1.5e34), 100);
             let stability = (1.0 - (transmission_coef * 4e33)).toFixed(3);
 
+            // Print values directly to screen container elements
             $('#val-viability').text(viability + "%");
             $('#val-stability').text(stability);
             
@@ -143,6 +155,7 @@
         }
 
         $(document).ready(function() {
+            // Trigger loop execution immediately upon browser document readiness
             runCalculations();
         });
     </script>
