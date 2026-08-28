@@ -227,28 +227,3 @@ if trigger_ai:
             df_ranked.style.background_gradient(cmap="Blues", subset=["Score"]).format({"Score": "{:.4f}"}),
             use_container_width=True
         )
-  st.success("🏆 Mutational ranking iteration finalized with zero memory resource
-  leaks!")
-
-# Automated CSV Exporter Utility
-csv_data = df_ranked.to_csv(index=False).encode('utf-8')
-with dl_col:
-st.download_button(
-    label="📥 Export Prediction Matrix (CSV Spreadsheet)",
-    data=csv_data,
-
-    file_name=f"esm2_mutation_matrix_{pdb_input}.csv",
-    mime="text/csv",
-use_container_width=True
-    )
-else:
-st.info("💡 Click the tracking command above to run prediction metrics natively across all 
-20 canonical amino acid variables.")
-st.markdown('', unsafe_allow_html=True)
-
-
-    
-
-
-
-
